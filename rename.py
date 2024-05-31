@@ -20,6 +20,6 @@ def rename_files_in_folder(folder_path, cards, prefix='img', extension='png'):
         print(f'Renamed: {src} to {dst}')
 
 # Example usage
-cards = ['0','2','3','4','5','6','7','8','9','A','J','K','Q']
-folder_path = "C:\\Users\\Acer\\Desktop\\Cards\\images"
+cards = ['2','3','4','5','6','7','8','9','0','A','J','K','Q']
+folder_path = "C:\\Users\\Acer\\Desktop\\Cards\\x"
 rename_files_in_folder(folder_path,cards)

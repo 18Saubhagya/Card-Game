@@ -2,8 +2,8 @@ const cardContainer = document.getElementById('card-container');
 cardContainer.innerHTML = '';
 const imageFolder = 'images';
 const hidden = 'images/hidden.png'
-const black = 'black.png';
-const cards = ['0', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'J', 'K', 'Q']
+const black = 'images/black.png';
+cards = ['2', '3', '4', '5', '6', '7', '8', '9', '0', 'A', 'J', 'K', 'Q']
 let imageList = [];
 let duplicate = [];
 let currentCard = 'S';
@@ -31,6 +31,10 @@ function shuffle(array) {
 function setup() {
     imageList = [];
     duplicate = [];
+    cardContainer.innerHTML = '';
+    document.querySelector('.move').innerHTML = 0;
+    count = 5;
+
     for (var i = 1; i <= 5; i++) {
         let randNum = getRandomInt(0, 12);
         while (duplicate.includes(randNum)) {
@@ -90,11 +94,11 @@ function calculate() {
     const imageItems = document.querySelectorAll('.check');
     imageItems.forEach(imageItem => imageItem.addEventListener('click', function() {
         const ctx = this;
-        cardContainer.style.pointerEvents = 'none';
-        setTimeout(function() {
-            console.log(ctx);
-            const str = ctx.src;
-            if (str.includes(hidden)) {
+        const str = ctx.src;
+        if (str.includes(hidden)) {
+            ctx.src = ctx.dataset.imgsrc;
+            cardContainer.style.pointerEvents = 'none';
+            setTimeout(function() {
                 ctx.src = ctx.dataset.imgsrc;
                 if (currentCard == 'S')
                     currentCard = ctx.classList[1];
@@ -106,19 +110,18 @@ function calculate() {
                     --count;
                 } else
                     ctx.src = hidden;
-            }
-            console.log(count);
-            let move = parseInt(document.querySelector('.move').innerHTML);
-            document.querySelector('.move').innerHTML = move + 1;
-            if (count == 0) {
-                if (intervalId) {
-                    clearInterval(intervalId);
+                let move = parseInt(document.querySelector('.move').innerHTML);
+                document.querySelector('.move').innerHTML = move + 1;
+                if (count == 0) {
+                    if (intervalId) {
+                        clearInterval(intervalId);
+                    }
+                    document.getElementById('card-container').style.display = 'none';
+                    document.getElementById('restartGame').style.display = 'block';
                 }
-                document.getElementById('card-container').style.display = 'none';
-                document.getElementById('restartGame').style.display = 'block';
-            }
-            cardContainer.style.pointerEvents = 'auto';
-        }, 500);
+                cardContainer.style.pointerEvents = 'auto';
+            }, 500);
+        }
     }));
 }
 
